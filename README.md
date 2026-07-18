@@ -1,97 +1,79 @@
-# generate-dummy-pdf
+# Dummy PDF & XLSX Generator
 
-Script Python buat generate dummy PDF berukuran presisi (byte-exact) untuk keperluan testing upload/download, testing batas ukuran file, dan sejenisnya.
+Project buat generate dummy PDF dan XLSX berukuran presisi (byte-exact) untuk keperluan testing upload/download, testing batas ukuran file, dan skenario cloud storage lainnya.
 
-File yang dihasilkan tetap PDF valid (bisa dibuka di reader mana pun, bukan cuma file random bytes yang dipaksa berekstensi `.pdf`), dan isinya beneran multi-halaman (bukan cuma 1 halaman + padding tersembunyi) — jumlah halaman menyesuaikan besar target ukuran.
+## Quick Start
+
+- **PDF Generator**: Lihat [pdf/README.md](pdf/README.md)
+- **XLSX Generator**: Lihat [xlsx/README.md](xlsx/README.md)
+- **CSV Generator**: Lihat [csv/README.md](csv/README.md)
+- **JSON Generator**: Lihat [json/README.md](json/README.md)
+- **SVG Generator**: Lihat [svg/README.md](svg/README.md)
+- **ZIP Generator**: Lihat [zip/README.md](zip/README.md)
+- **WEBP Generator**: Lihat [webp/README.md](webp/README.md)
+- **R2 Bulk Upload**: Lihat [r2_bulk_upload/README.md](r2_bulk_upload/README.md)
+
+## Project Structure
+
+```
+dummy-pdf-generator/
+├── README.md                      # File ini
+├── r2_upload.sh                   # Script buat upload file ke R2
+├── pdf/
+│   ├── generate_dummy_pdf.py      # PDF generator
+│   └── README.md                  # Dokumentasi PDF
+├── xlsx/
+│   └── generate_dummy_xlsx.py     # XLSX generator
+├── csv/
+│   └── generate_dummy_csv.py      # CSV generator
+├── json/
+│   ├── generate_dummy_json.py     # JSON generator
+│   └── README.md                  # Dokumentasi JSON
+├── svg/
+│   ├── generate_dummy_svg.py      # SVG generator
+│   └── README.md                  # Dokumentasi SVG
+├── zip/
+│   ├── generate_dummy_zip.py      # ZIP generator
+│   └── README.md                  # Dokumentasi ZIP
+├── webp/
+│   ├── generate_dummy_webp.py     # WEBP generator
+│   └── README.md                  # Dokumentasi WEBP
+└── r2_bulk_upload/
+    ├── r2_upload.sh               # Script upload bulk ke R2
+    └── README.md                  # Dokumentasi R2 Upload
+```
+
+## Fitur
+
+- Generate file PDF, XLSX, CSV, JSON, SVG, ZIP, dan WEBP valid dengan ukuran byte presisi
+- Test upload/download dengan ukuran file yang tepat
+- Test batas ukuran file
+- Kompatibel dengan cloud storage (R2, S3, dll)
+- Semua file valid dan bisa dibuka di reader standar
 
 ## Requirements
 
 - Python 3.8+
-- [pikepdf](https://pypi.org/project/pikepdf/)
-- [reportlab](https://pypi.org/project/reportlab/)
+- pikepdf, reportlab (untuk PDF)
+- openpyxl (untuk XLSX)
+- Standard library (untuk CSV, JSON, SVG, ZIP, WEBP)
 
-## Install
+## Installation
 
-### Opsi 1 — langsung ke sistem
+Lihat dokumentasi generator spesifik untuk instruksi instalasi detail.
 
-Di distro Linux modern (Debian/Ubuntu terbaru dkk), `pip install` biasa bakal ke-block sama proteksi `externally-managed-environment`. Tambahin flag `--break-system-packages`:
+### CSV Generator
+Tidak butuh dependency eksternal, hanya Python standard library.
 
-```bash
-pip install pikepdf reportlab --break-system-packages
+### PDF Generator
 ```
-
-### Opsi 2 — virtual environment (lebih direkomendasikan)
-
-```bash
-python3 -m venv venv
-source venv/bin/activate
 pip install pikepdf reportlab
 ```
 
-Tiap mau pakai lagi, aktifin dulu venv-nya: `source venv/bin/activate`.
-
-## Usage
-
-```bash
-# generate semua ukuran default (1KB s/d 100MB)
-python3 generate_dummy_pdf.py
-
-# generate ukuran tertentu aja
-python3 generate_dummy_pdf.py --sizes 1kb,50kb,10mb
-
-# ukuran custom yang gak ada di default
-python3 generate_dummy_pdf.py --sizes 250kb,2.5mb,777kb
-
-# ganti folder output
-python3 generate_dummy_pdf.py --outdir ./pdf
-
-# ganti prefix nama file (default: Contohnya-PDF)
-python3 generate_dummy_pdf.py --prefix MyFile
-
-# pakai definisi binary (1 MB = 1024x1024 bytes / MiB) instead of decimal (default)
-python3 generate_dummy_pdf.py --sizes 100mb --binary
+### XLSX Generator
 ```
-
-### Ukuran default
-
-`1KB, 50KB, 100KB, 500KB, 1MB, 5MB, 10MB, 50MB, 100MB`
-
-Nama file output ikut pattern `{prefix}-{ukuran}.pdf`, misal `Contohnya-PDF-1KB.pdf`, `Contohnya-PDF-10MB.pdf`.
-
-### Decimal vs Binary
-
-Default script ini pakai definisi **decimal** (1 KB = 1.000 bytes, 1 MB = 1.000.000 bytes), sesuai gimana kebanyakan file manager/browser/dashboard cloud storage (R2, S3, dll) nampilin ukuran file. Kalau butuh definisi **binary/KiB-MiB** (1 KB = 1024 bytes), pakai flag `--binary`.
-
-### Kustomisasi teks di dalam PDF
-
-Edit langsung dua variabel ini di bagian atas file `generate_dummy_pdf.py`:
-
-```python
-PDF_TITLE = "Contoh File PDF - Contohnya.web.id"
-PDF_SUBTITLE = "Dummy file untuk testing"
+pip install openpyxl
 ```
-
-## Uninstall
-
-```bash
-pip uninstall pikepdf reportlab --break-system-packages
-```
-
-Kalau pakai virtual environment, cukup hapus foldernya:
-
-```bash
-rm -rf venv
-```
-
-## Cara kerja (singkat)
-
-1. Bikin base PDF valid berisi konten teks asli (judul, subjudul, nomor halaman, baris dummy) — jumlah halaman menyesuaikan besar target (makin gede target, makin banyak halaman, dicap di 500 halaman).
-2. Kalau masih ada sisa gap ke ukuran target, ditambahin extra stream object berisi **random bytes** (bukan byte berulang, karena byte berulang gampang kekompres) sebagai padding.
-3. Disimpan dengan `compress_streams=False` supaya padding-nya gak ikut dikompres ulang dan ukuran akhir tetap presisi byte-exact.
-
-## Disclaimer
-
-Kode di repo ini dibuat dengan bantuan **Claude Sonnet 5** (Anthropic).
 
 ## License
 
