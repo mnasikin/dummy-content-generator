@@ -28,9 +28,18 @@ Project buat generate konten berukuran presisi (byte-exact) untuk keperluan test
 - **HEIF Generator**: Lihat [gambar/heif/README.md](gambar/heif/README.md)
 - **AVIF Generator**: Lihat [gambar/avif/README.md](gambar/avif/README.md)
 
+### Media
+
+- **WAV Generator**: Lihat [media/wav/README.md](media/wav/README.md)
+- **MP3 Generator**: Lihat [media/mp3/README.md](media/mp3/README.md)
+- **AAC Generator**: Lihat [media/aac/README.md](media/aac/README.md)
+- **OGG Generator**: Lihat [media/ogg/README.md](media/ogg/README.md)
+- **MP4 Generator**: Lihat [media/mp4/README.md](media/mp4/README.md)
+
 ### Script
 
 - **HTML Generator**: Lihat [script/html/README.md](script/html/README.md)
+- **CSS Generator**: Lihat [script/css/README.md](script/css/README.md)
 - **JS Generator**: Lihat [script/js/README.md](script/js/README.md)
 - **PHP Generator**: Lihat [script/php/README.md](script/php/README.md)
 - **PY Generator**: Lihat [script/py/README.md](script/py/README.md)
@@ -50,6 +59,7 @@ Project buat generate konten berukuran presisi (byte-exact) untuk keperluan test
 - **ZIP Generator**: Lihat [arsip/zip/README.md](arsip/zip/README.md)
 - **RAR Generator**: Lihat [arsip/rar/README.md](arsip/rar/README.md)
 - **7Z Generator**: Lihat [arsip/7z/README.md](arsip/7z/README.md)
+- **GZ Generator**: Lihat [arsip/gz/README.md](arsip/gz/README.md)
 - **TAR Generator**: Lihat [arsip/tar/README.md](arsip/tar/README.md)
 - **TAR.GZ Generator**: Lihat [arsip/tar.gz/README.md](arsip/tar.gz/README.md)
 
