@@ -11,6 +11,7 @@ Project buat generate konten berukuran presisi (byte-exact) untuk keperluan test
 - **PDF Generator**: Lihat [dokumen/pdf/README.md](dokumen/pdf/README.md)
 - **DOCX Generator**: Lihat [dokumen/docx/README.md](dokumen/docx/README.md)
 - **DOC Generator**: Lihat [dokumen/doc/README.md](dokumen/doc/README.md)
+- **RTF Generator**: Lihat [dokumen/rtf/README.md](dokumen/rtf/README.md)
 - **XLSX Generator**: Lihat [dokumen/xlsx/README.md](dokumen/xlsx/README.md)
 - **XLS Generator**: Lihat [dokumen/xls/README.md](dokumen/xls/README.md)
 - **MD Generator**: Lihat [dokumen/md/README.md](dokumen/md/README.md)
